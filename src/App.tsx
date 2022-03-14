@@ -1,14 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Header, Categories} from "./Components";
 
 function App() {
+
+    const [selectedItem, setSelectedItem] = useState<number | null>(null);
+
+    function selectItemCategory (item: number | null) {
+        setSelectedItem(item)
+    }
+
     return (
         <div className="wrapper">
             <Header />
             <div className="content">
                 <div className="container">
                     <div className="content__top">
-                        <Categories />
+                        <Categories
+                            items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}
+                            selectItem={selectItemCategory}
+                            selectedItem={selectedItem}
+                        />
                         <div className="sort">
                             <div className="sort__label">
                                 <svg
