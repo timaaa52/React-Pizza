@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import './scss/app.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <BrowserRouter>
+            <Routes>
+                <Route path={'/'} element={<App/>}/>
+                <Route path={'/*'} element={<Navigate to={'/404'}/>} />
+            </Routes>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
