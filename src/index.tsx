@@ -3,15 +3,13 @@ import ReactDOM from 'react-dom';
 import './scss/app.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {Cart} from './pages/Cart'
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Routes>
-                <Route path={'/'} element={<App/>}/>
-                <Route path={'/*'} element={<Navigate to={'/404'}/>} />
-            </Routes>
+              <App />
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')

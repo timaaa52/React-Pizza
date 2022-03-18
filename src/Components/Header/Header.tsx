@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import logoSVG from "../../assets/img/pizza-logo.svg";
 import {Button} from "../Button/Button";
 
@@ -11,6 +12,7 @@ export const Header: React.FC<HeaderPropsType> = ({}) => {
     return (
         <div className="header">
             <div className="container">
+                <NavLink to='/'>
                 <div className="header__logo">
                     <img width="38" src={logoSVG} alt="Pizza logo"/>
                     <div>
@@ -18,7 +20,9 @@ export const Header: React.FC<HeaderPropsType> = ({}) => {
                         <p>самая вкусная пицца во вселенной</p>
                     </div>
                 </div>
+                </NavLink>
                 <div className="header__cart">
+                    <NavLink to='/cart'>
                     <Button className={'button--cart'}>
                         <span>520 ₽</span>
                         <div className="button__delimiter"></div>
@@ -53,6 +57,7 @@ export const Header: React.FC<HeaderPropsType> = ({}) => {
                         </svg>
                         <span>3</span>
                     </Button>
+                    </NavLink>
                 </div>
             </div>
         </div>
