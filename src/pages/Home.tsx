@@ -1,12 +1,11 @@
-import React, { useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { Categories, SortPopup, PizzaBlock} from '../Components';
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {setCategoryAC } from '../redux/actions/fiterActions';
 import { rootReducerType } from '../redux/store';
-import { connect } from 'react-redux';
-import { stateType } from '../redux/reducers/filterReducer';
+import { setPizzasAC } from '../redux/actions/pizzasActions';
 
 
 export type pizzasType = {
@@ -22,17 +21,15 @@ export type pizzasType = {
 
 
 export const Home = () => {
-    // const [selectedItem, setSelectedItem] = useState<number | null>(null);
-    const [pizzas, setPizzas] = useState<Array<pizzasType>>([])
     const dispatch = useDispatch<Dispatch>();
     const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
+    const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
     useEffect(() => {
-       axios.get('http://localhost:3000/db.json').then(({data}) => setPizzas(data.pizzas)
+       axios.get('http://localhost:3000/db.json').then(({data}) => dispatch(setPizzasAC(data.pizzas))
        );
     }, [])
 
     function selectPizzaCategory(item: number | null) {
-        // setSelectedItem(item);
         dispatch(setCategoryAC(item))
     }
 
@@ -51,7 +48,7 @@ export const Home = () => {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {
-                    pizzas.map(el => 
+                   pizzas && pizzas.map(el => 
                         {
                            return <PizzaBlock key={el.id} {...el} /> 
                         }
@@ -60,4 +57,4 @@ export const Home = () => {
             </div>
         </div>
     )
-}
+};

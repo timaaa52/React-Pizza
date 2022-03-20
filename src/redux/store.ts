@@ -3,7 +3,7 @@ import { cartReducer, filterReducer, pizzasReducer } from './reducers';
 
 const rootReducer = combineReducers({
     filters: filterReducer,
-    // pizzas: pizzasReducer,
+    pizzas: pizzasReducer,
     // cart: cartReducer,
 });
 
