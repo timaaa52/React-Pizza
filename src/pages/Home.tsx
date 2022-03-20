@@ -7,7 +7,6 @@ import {setCategoryAC } from '../redux/actions/fiterActions';
 import { rootReducerType } from '../redux/store';
 import { setPizzasAC } from '../redux/actions/pizzasActions';
 
-
 export type pizzasType = {
     id: number
     imageUrl: string
@@ -19,11 +18,22 @@ export type pizzasType = {
     rating: number
 }
 
+type ss = {
+    pizzas: Array<pizzasType>
+    category: null | number
+}
+
 
 export const Home = () => {
     const dispatch = useDispatch<Dispatch>();
-    const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
-    const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
+    // const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
+    // const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
+    const {pizzas, category} = useSelector<rootReducerType, ss>(({pizzas, filters}) => {
+        return {
+            pizzas: pizzas.items,
+            category: filters.category,
+        }
+    })
     useEffect(() => {
        axios.get('http://localhost:3000/db.json').then(({data}) => dispatch(setPizzasAC(data.pizzas))
        );
