@@ -1,1 +1,29 @@
-import React from 'react';type CategoriesPropsType = {    items?: Array<string>    selectItem: (item: number | null) => void    selectedItem: number | null}// export class Categories extends React.Component<CategoriesPropsType> {////     state = {//         activeItem: 0,//     }////     onSelectItem = (index: number) => {//         this.setState({//             activeItem: index//         })//     }////     render() {//         return (//             <div className="categories">//                 <ul>//                     {this.props.items.map((el, i) =>//                     <li className={this.state.activeItem === i ? 'active' : ''} onClick={() => this.onSelectItem(i)} key={`${el}_${i}`}>{el}</li>//               )}//            </ul>//             </div>//         );//     }// }export const Categories: React.FC<CategoriesPropsType> = ({items, selectItem, selectedItem}) => {    return (        <div className="categories">            <ul>                <li className={selectedItem === null ? 'active' : ''} onClick={() => selectItem(null)}>Все</li>                {items && items.map((el, i) =>                    <li                        className={selectedItem === i ? 'active' : ''}                        onClick={() => selectItem(i)}                        key={`${el}_${i}`}                    >                        {el}                    </li>                )}            </ul>        </div>    );};
+import React from 'react';
+
+
+type CategoriesPropsType = {
+    items?: Array<string>
+    selectItem: (item: number | null) => void
+    selectedItem: number | null
+}
+
+
+export const Categories: React.FC<CategoriesPropsType> = ({items, selectItem, selectedItem}) => {
+
+    return (
+        <div className="categories">
+            <ul>
+                <li className={selectedItem === null ? 'active' : ''} onClick={() => selectItem(null)}>Все</li>
+                {items && items.map((el, i) =>
+                    <li
+                        className={selectedItem === i ? 'active' : ''}
+                        onClick={() => selectItem(i)}
+                        key={`${el}_${i}`}
+                    >
+                        {el}
+                    </li>
+                )}
+            </ul>
+        </div>
+    );
+};

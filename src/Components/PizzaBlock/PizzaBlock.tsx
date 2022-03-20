@@ -36,8 +36,6 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, p
                             </li>
                         })
                     }
-                    {/* <li className="active">тонкое</li>
-                    <li>традиционное</li> */}
                 </ul>
                 <ul>
                     {
