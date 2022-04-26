@@ -13,13 +13,13 @@ type SortPopupPropsType = {
     nameOfSort: Array<itemsSortType>
 }
 
-export const SortPopup: React.FC<SortPopupPropsType> = ({nameOfSort}) => {
+export const SortPopup: React.FC<SortPopupPropsType> = React.memo(({nameOfSort}) => {
 
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [activeItem, setActiveItem] = useState(0);
     const sortRef = useRef() as RefObject<HTMLDivElement>;
     const dispatch = useDispatch<Dispatch>()
-    
+
     useEffect(() => {
         document.body.addEventListener('click', clickOutSide);
     }, [])
@@ -76,4 +76,4 @@ export const SortPopup: React.FC<SortPopupPropsType> = ({nameOfSort}) => {
             </div>}
         </div>
     );
-};
+})

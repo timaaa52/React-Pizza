@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react'
-import { Categories, SortPopup, PizzaBlock} from '../Components';
-import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
-import {setCategoryAC } from '../redux/actions/fiterActions';
-import { rootReducerType } from '../redux/store';
-import { setPizzasAC } from '../redux/actions/pizzasActions';
+import React from 'react'
+import {Categories, PizzaBlock, SortPopup} from '../Components';
+import {useDispatch, useSelector} from 'react-redux';
+import {Dispatch} from 'redux';
+import {setCategoryAC} from '../redux/actions/fiterActions';
+import {rootReducerType} from '../redux/store';
+import {itemsSortType} from "../Components/SortPopup/SortPopup";
 
 export type pizzasType = {
     id: number
@@ -23,6 +22,10 @@ type ss = {
     category: null | number
 }
 
+const items = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+const sortItems: Array<itemsSortType> = [{name: 'популярности', sortBy: 'popular'},
+    {name: 'цене', sortBy: 'price'},
+    {name: 'алфавиту', sortBy: 'alphabet'}]
 
 export const Home = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -34,35 +37,28 @@ export const Home = () => {
             category: filters.category,
         }
     })
-    useEffect(() => {
-       axios.get('http://localhost:3000/db.json').then(({data}) => dispatch(setPizzasAC(data.pizzas))
-       );
-    }, [])
 
-    function selectPizzaCategory(item: number | null) {
+    const selectPizzaCategory = React.useCallback(function selectPizzaCategory(item: number | null) {
         dispatch(setCategoryAC(item))
-    }
+    }, [dispatch])
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories
-                    items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}
+                    items={items}
                     selectItem={selectPizzaCategory}
                     selectedItem={category}
                 />
-                <SortPopup nameOfSort={[{name: 'популярности', sortBy: 'popular'}, 
-                {name: 'цене', sortBy: 'price'}, 
-                {name: 'алфавиту', sortBy: 'alphabet'}]} />
+                <SortPopup nameOfSort={sortItems}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {
-                   pizzas && pizzas.map(el => 
-                        {
-                           return <PizzaBlock key={el.id} {...el} /> 
+                    pizzas && pizzas.map(el => {
+                            return <PizzaBlock key={el.id} {...el} />
                         }
-                        )
+                    )
                 }
             </div>
         </div>

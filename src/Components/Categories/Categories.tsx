@@ -8,7 +8,7 @@ type CategoriesPropsType = {
 }
 
 
-export const Categories: React.FC<CategoriesPropsType> = ({items, selectItem, selectedItem}) => {
+export const Categories: React.FC<CategoriesPropsType> = React.memo(({items, selectItem, selectedItem}) => {
 
     return (
         <div className="categories">
@@ -26,4 +26,4 @@ export const Categories: React.FC<CategoriesPropsType> = ({items, selectItem, se
             </ul>
         </div>
     );
-};
+})
