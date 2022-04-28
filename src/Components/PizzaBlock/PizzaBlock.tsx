@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { pizzasType } from '../../pages/Home';
 import classNames from 'classnames';
-
 type PizzaBlockPropsType = {
 
 }
@@ -13,6 +12,8 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, p
     const availablePizzaSizes = [26, 30, 40];
 
     return (
+
+
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
@@ -73,6 +74,6 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, p
                     <i>2</i>
                 </div>
             </div>
-        </div>
+        </div>   
     );
 };

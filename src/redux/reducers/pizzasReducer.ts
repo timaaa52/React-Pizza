@@ -17,6 +17,7 @@ export const pizzasReducer = (state: stateType = initialState, action: generalTy
             return {
                 ...state,
                 items: action.payload.items,
+                isLoading: true,
             }
         default: return state;
     }

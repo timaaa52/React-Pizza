@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { setCategoryAC } from "../redux/actions/fiterActions";
 import { rootReducerType } from "../redux/store";
 import { itemsSortType } from "../Components/SortPopup/SortPopup";
+import PizzaLoaded from "../Components/PizzaBlock/PizzaLoaded";
 
 export type pizzasType = {
   id: number;
@@ -20,6 +21,7 @@ export type pizzasType = {
 type ss = {
   pizzas: Array<pizzasType>;
   category: null | number;
+  isLoaded: boolean;
 };
 
 const items = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
@@ -33,10 +35,11 @@ export const Home = () => {
   const dispatch = useDispatch<Dispatch>();
   // const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
   // const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
-  const { pizzas, category } = useSelector<rootReducerType, ss>(
+  const { pizzas, category, isLoaded } = useSelector<rootReducerType, ss>(
     ({ pizzas, filters }) => {
       return {
         pizzas: pizzas.items,
+        isLoaded: pizzas.isLoading,
         category: filters.category,
       };
     }
@@ -44,7 +47,7 @@ export const Home = () => {
 
   const selectPizzaCategory = React.useCallback(
     function selectPizzaCategory(item: number | null) {
-      dispatch(setCategoryAC(item))
+      dispatch(setCategoryAC(item));
     },
     [dispatch]
   );
@@ -61,10 +64,12 @@ export const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {pizzas &&
+        {isLoaded ?
           pizzas.map((el) => {
             return <PizzaBlock key={el.id} {...el} />;
-          })}
+            // создаем массив из 10 элементов, и заполняем его компонентами предзагрузки пицц
+          }) : Array(10).fill(<PizzaLoaded/>)
+        }
       </div>
     </div>
   );
