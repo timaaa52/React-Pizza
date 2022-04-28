@@ -1,5 +1,7 @@
+import { Dispatch } from "redux"
+import { pizzasApi } from "../../api/api"
 import { pizzasType } from "../../pages/Home"
-import { setPizzasACType } from "../actions/pizzasActions"
+import { setPizzasAC, setPizzasACType } from "../actions/pizzasActions"
 
 type stateType = {
     items: pizzasType[],
@@ -19,6 +21,12 @@ export const pizzasReducer = (state: stateType = initialState, action: generalTy
         default: return state;
     }
 }
+
+
+export const fetchPizzasTC = () => (dispatch: Dispatch) => {
+    pizzasApi.getPizzas().then(res => dispatch(setPizzasAC(res.data)))
+}
+
 
 
 type generalType = setPizzasACType

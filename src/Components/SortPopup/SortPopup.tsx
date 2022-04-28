@@ -1,8 +1,7 @@
 import React, {RefObject, useEffect, useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
-import { Dispatch } from 'redux';
 import { setSortByAC } from '../../redux/actions/fiterActions';
-import { sortByType } from '../../redux/reducers/filterReducer';
+import { filtredPizzasTC, sortByType } from '../../redux/reducers/filterReducer';
 
 export type itemsSortType = {
     name: string
@@ -18,7 +17,7 @@ export const SortPopup: React.FC<SortPopupPropsType> = React.memo(({nameOfSort})
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [activeItem, setActiveItem] = useState(0);
     const sortRef = useRef() as RefObject<HTMLDivElement>;
-    const dispatch = useDispatch<Dispatch>()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         document.body.addEventListener('click', clickOutSide);
@@ -34,6 +33,7 @@ export const SortPopup: React.FC<SortPopupPropsType> = React.memo(({nameOfSort})
     const changeSortElement = (id: number, sortBy: sortByType) => {
         setActiveItem(id);
         dispatch(setSortByAC(sortBy));
+        dispatch(filtredPizzasTC(sortBy))
         setVisiblePopup(false)
     }
 

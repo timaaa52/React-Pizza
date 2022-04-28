@@ -6,19 +6,14 @@ import { Home } from './pages/Home';
 import axios from "axios";
 import {setPizzasAC} from "./redux/actions/pizzasActions";
 import {useDispatch} from "react-redux";
+import { fetchPizzasTC } from './redux/reducers/pizzasReducer';
 
 function App() {
 
     const dispatch = useDispatch();
 
-    //@ts-ignore
-    window.test = () => {
-        axios.get('http://localhost:3000/db.json').then(({data}) => dispatch(setPizzasAC(data.pizzas)))
-    };
-
     useEffect(() => {
-        axios.get('http://localhost:3000/db.json').then(({data}) => dispatch(setPizzasAC(data.pizzas))
-        );
+        dispatch(fetchPizzasTC())
     }, [])
 
     return (

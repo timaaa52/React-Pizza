@@ -5,7 +5,7 @@ test('change category should be completed', () => {
 
     const startState: stateType = {
         category: null,
-        sortBy: 'popular'
+        sortBy: 'rating'
     }
 
     let action = setCategoryAC(2);
@@ -13,14 +13,14 @@ test('change category should be completed', () => {
     let endState = filterReducer(startState, action);
 
     expect(endState.category).toBe(2);
-    expect(endState.sortBy).toBe('popular');
+    expect(endState.sortBy).toBe('rating');
 });
 
 test('change sortBy should be completed', () => {
 
     const startState: stateType = {
         category: null,
-        sortBy: 'popular'
+        sortBy: 'rating'
     }
 
     let action = setSortByAC('price');
