@@ -6,6 +6,7 @@ import { setCategoryAC } from "../redux/actions/fiterActions";
 import { rootReducerType } from "../redux/store";
 import { itemsSortType } from "../Components/SortPopup/SortPopup";
 import PizzaLoaded from "../Components/PizzaBlock/PizzaLoaded";
+import { setCategoryPizzasTC } from "../redux/reducers/filterReducer";
 
 export type pizzasType = {
   id: number;
@@ -32,7 +33,7 @@ const sortItems: Array<itemsSortType> = [
 ];
 
 export const Home = () => {
-  const dispatch = useDispatch<Dispatch>();
+  const dispatch = useDispatch();
   // const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
   // const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
   const { pizzas, category, isLoaded } = useSelector<rootReducerType, ss>(
@@ -47,6 +48,7 @@ export const Home = () => {
 
   const selectPizzaCategory = React.useCallback(
     function selectPizzaCategory(item: number | null) {
+        dispatch(setCategoryPizzasTC(item))
       dispatch(setCategoryAC(item));
     },
     [dispatch]

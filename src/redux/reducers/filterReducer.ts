@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { setCategoryType, setSortByType } from "../actions/fiterActions"
 import {pizzasApi} from "../../api/api"
-import { setPizzasAC } from "../actions/pizzasActions";
+import { setPizzasAC, setPizzasLoadingAC } from "../actions/pizzasActions";
 
 export type sortByType = 'rating' | 'price' | 'name';
 
@@ -32,8 +32,15 @@ export const filtredPizzasTC = (filter: string) => {
 }
 
 export const setCategoryPizzasTC = (category: number | null) => (dispatch: Dispatch) => {
-    if(typeof category === 'number') pizzasApi.setPizzasCategoty(category).then(res => {dispatch(setPizzasAC(res.data))})
-    if(typeof category === null) pizzasApi.getPizzas().then(res => { dispatch(setPizzasAC(res.data)) })
+    dispatch(setPizzasLoadingAC(false))
+    if(typeof category === 'number') pizzasApi.setPizzasCategoty(category).then(res => {
+        dispatch(setPizzasAC(res.data))
+        dispatch(setPizzasLoadingAC(true))
+    })
+    if(typeof category === 'object') pizzasApi.getPizzas().then(res => { 
+        dispatch(setPizzasAC(res.data)) 
+        dispatch(setPizzasLoadingAC(true))
+    })
 }
 
 

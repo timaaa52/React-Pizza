@@ -8,11 +8,26 @@ export type setPizzasACType = {
         items: Array<pizzasType>
     }
 }
+export type setPizzasLoadingACType = {
+    type: 'SET_PIZZAS_LOADING',
+    payload: {
+        status: boolean
+    }
+}
 export const setPizzasAC = (items: Array<pizzasType>): setPizzasACType => {
     return {
         type: 'SET_PIZZAS',
         payload: {
             items,
+        }
+    }
+}
+
+export const setPizzasLoadingAC = (status: boolean) => {
+    return {
+        type: 'SET_PIZZAS_LOADING',
+        payload: {
+            status
         }
     }
 }

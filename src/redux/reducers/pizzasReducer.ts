@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import { pizzasApi } from "../../api/api"
 import { pizzasType } from "../../pages/Home"
-import { setPizzasAC, setPizzasACType } from "../actions/pizzasActions"
+import { setPizzasAC, setPizzasACType, setPizzasLoadingACType } from "../actions/pizzasActions"
 
 type stateType = {
     items: pizzasType[],
@@ -19,6 +19,11 @@ export const pizzasReducer = (state: stateType = initialState, action: generalTy
                 items: action.payload.items,
                 isLoading: true,
             }
+        case 'SET_PIZZAS_LOADING': 
+            return {
+                ...state, 
+                isLoading: action.payload.status
+            }
         default: return state;
     }
 }
@@ -30,4 +35,4 @@ export const fetchPizzasTC = () => (dispatch: Dispatch) => {
 
 
 
-type generalType = setPizzasACType
+type generalType = setPizzasACType | setPizzasLoadingACType
