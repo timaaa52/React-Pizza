@@ -1,7 +1,7 @@
 import React, {RefObject, useEffect, useRef, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { setSortByAC } from '../../redux/actions/fiterActions';
-import { filtredPizzasTC, sortByType } from '../../redux/reducers/filterReducer';
+import { sortByType } from '../../redux/reducers/filterReducer';
 
 export type itemsSortType = {
     name: string
@@ -33,7 +33,6 @@ export const SortPopup: React.FC<SortPopupPropsType> = React.memo(({nameOfSort})
     const changeSortElement = (id: number, sortBy: sortByType) => {
         setActiveItem(id);
         dispatch(setSortByAC(sortBy));
-        dispatch(filtredPizzasTC(sortBy))
         setVisiblePopup(false)
     }
 

@@ -23,25 +23,5 @@ export const filterReducer = (state: stateType = initialState, action: generalTy
     }
 }
 
-export const filtredPizzasTC = (filter: string) => {
-    return (dispatch: Dispatch) => {
-       if(filter === 'rating') pizzasApi.setPizzasFilterByRating(filter).then(res => dispatch(setPizzasAC(res.data)))
-       if(filter === 'name') pizzasApi.setPizzasFilterByName(filter).then(res => dispatch(setPizzasAC(res.data)))
-       if(filter === 'price') pizzasApi.setPizzasFilterByPrice(filter).then(res => dispatch(setPizzasAC(res.data)))
-    }
-}
-
-export const setCategoryPizzasTC = (category: number | null) => (dispatch: Dispatch) => {
-    dispatch(setPizzasLoadingAC(false))
-    if(typeof category === 'number') pizzasApi.setPizzasCategoty(category).then(res => {
-        dispatch(setPizzasAC(res.data))
-        dispatch(setPizzasLoadingAC(true))
-    })
-    if(typeof category === 'object') pizzasApi.getPizzas().then(res => { 
-        dispatch(setPizzasAC(res.data)) 
-        dispatch(setPizzasLoadingAC(true))
-    })
-}
-
 
 type generalType = setSortByType | setCategoryType;

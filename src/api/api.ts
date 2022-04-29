@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios"
-import { pizzasType } from "../pages/Home"
+import axios from "axios"
+import { sortByType } from "../redux/reducers/filterReducer"
 
 const instance = axios.create({
     baseURL: 'http://localhost:3001'
@@ -7,20 +7,8 @@ const instance = axios.create({
 
 
 export const pizzasApi = {
-    getPizzas() {
-        return instance.get<pizzasType[]>(`http://localhost:3001/pizzas`)
-    },
-    setPizzasCategoty(category: number){
-        return instance.get<pizzasType[]>(`http://localhost:3001/pizzas?category=${category}`)
-    },
-    setPizzasFilterByName(filter: string){
-        return instance.get<pizzasType[]>(`http://localhost:3001/pizzas?_order=asc&_sort=${filter}`)
-    },
-    setPizzasFilterByRating(filter: string){
-        return instance.get<pizzasType[]>(`http://localhost:3001/pizzas?_order=desc&_sort=${filter}`)
-    },
-    setPizzasFilterByPrice(filter: string){
-        return instance.get<pizzasType[]>(`http://localhost:3001/pizzas?_order=desc&_sort=${filter}`)
+    getPizzas(category: number | null, sortBy: sortByType) {
+            return instance.get(`http://localhost:3001/pizzas?${ category !== null ? `category=$${category}`: ''}&_sort=${sortBy}&_order=${sortBy === 'name' ? 'asc' : 'desc'}`)
     },
 }
 

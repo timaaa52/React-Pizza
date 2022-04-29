@@ -2,6 +2,7 @@ import { Dispatch } from "redux"
 import { pizzasApi } from "../../api/api"
 import { pizzasType } from "../../pages/Home"
 import { setPizzasAC, setPizzasACType, setPizzasLoadingACType } from "../actions/pizzasActions"
+import { sortByType } from "./filterReducer"
 
 type stateType = {
     items: pizzasType[],
@@ -29,8 +30,8 @@ export const pizzasReducer = (state: stateType = initialState, action: generalTy
 }
 
 
-export const fetchPizzasTC = () => (dispatch: Dispatch) => {
-    pizzasApi.getPizzas().then(res => dispatch(setPizzasAC(res.data)))
+export const fetchPizzasTC = (category: number | null, sortBy: sortByType) => (dispatch: Dispatch) => {
+    pizzasApi.getPizzas(category, sortBy)!.then(res => dispatch(setPizzasAC(res.data)))
 }
 
 

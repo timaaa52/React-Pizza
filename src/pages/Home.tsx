@@ -1,12 +1,13 @@
 import React from "react";
 import { Categories, PizzaBlock, SortPopup } from "../Components";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
 import { setCategoryAC } from "../redux/actions/fiterActions";
 import { rootReducerType } from "../redux/store";
 import { itemsSortType } from "../Components/SortPopup/SortPopup";
 import PizzaLoaded from "../Components/PizzaBlock/PizzaLoaded";
-import { setCategoryPizzasTC } from "../redux/reducers/filterReducer";
+import { sortByType } from "../redux/reducers/filterReducer";
+import { fetchPizzasTC } from "../redux/reducers/pizzasReducer";
+import { useEffect } from "react";
 
 export type pizzasType = {
   id: number;
@@ -23,6 +24,7 @@ type ss = {
   pizzas: Array<pizzasType>;
   category: null | number;
   isLoaded: boolean;
+  sortBy: sortByType
 };
 
 const items = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
@@ -34,21 +36,26 @@ const sortItems: Array<itemsSortType> = [
 
 export const Home = () => {
   const dispatch = useDispatch();
+
   // const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
   // const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
-  const { pizzas, category, isLoaded } = useSelector<rootReducerType, ss>(
+  const { pizzas, category, isLoaded, sortBy } = useSelector<rootReducerType, ss>(
     ({ pizzas, filters }) => {
       return {
         pizzas: pizzas.items,
         isLoaded: pizzas.isLoading,
         category: filters.category,
+        sortBy: filters.sortBy
       };
     }
   );
 
+  useEffect(() => {
+    dispatch(fetchPizzasTC(category, sortBy));
+  }, [category, sortBy]);
+
   const selectPizzaCategory = React.useCallback(
     function selectPizzaCategory(item: number | null) {
-        dispatch(setCategoryPizzasTC(item))
       dispatch(setCategoryAC(item));
     },
     [dispatch]
@@ -66,12 +73,12 @@ export const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoaded ?
-          pizzas.map((el) => {
-            return <PizzaBlock key={el.id} {...el} />;
-            // создаем массив из 10 элементов, и заполняем его компонентами предзагрузки пицц
-          }) : Array(10).fill(<PizzaLoaded/>)
-        }
+        {isLoaded
+          ? pizzas.map((el) => {
+              return <PizzaBlock key={el.id} {...el} />;
+              // создаем массив из 10 элементов, и заполняем его компонентами предзагрузки пицц
+            })
+          : Array(10).fill(<PizzaLoaded />)}
       </div>
     </div>
   );
