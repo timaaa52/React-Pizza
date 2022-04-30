@@ -8,10 +8,11 @@ type ButtonPropsType = DefaultButtonProps & {
     className?: string
 }
 
-export const Button: React.FC<ButtonPropsType> = ({children, className}) => {
+export const Button: React.FC<ButtonPropsType> = ({children, className, onClick}) => {
     return (
         <button
             className={classNames('button', className, { })}
+            onClick={onClick}
         >
             {children}
         </button>
