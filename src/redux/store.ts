@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 const rootReducer = combineReducers({
     filters: filterReducer,
     pizzas: pizzasReducer,
-    // cart: cartReducer,
+    cart: cartReducer,
 });
 
 export type rootReducerType = ReturnType<typeof rootReducer>;
