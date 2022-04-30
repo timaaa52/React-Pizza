@@ -8,6 +8,7 @@ import PizzaLoaded from "../Components/PizzaBlock/PizzaLoaded";
 import { sortByType } from "../redux/reducers/filterReducer";
 import { fetchPizzasTC } from "../redux/reducers/pizzasReducer";
 import { useEffect } from "react";
+import {addPizzaToCartAC} from "../redux/actions/cartActions";
 
 export type pizzasType = {
   id: number;
@@ -19,6 +20,14 @@ export type pizzasType = {
   category: number;
   rating: number;
 };
+
+export type onAddPizzaHandlerType = {
+  id: number
+  name: string
+  price: number
+  type: string
+  size: number
+}
 
 type ss = {
   pizzas: Array<pizzasType>;
@@ -61,6 +70,10 @@ export const Home = () => {
     [dispatch]
   );
 
+  const onAddPizzaToCard = (item: onAddPizzaHandlerType) => {
+    dispatch(addPizzaToCartAC(item))
+  }
+
   return (
     <div className="container">
       <div className="content__top">
@@ -75,7 +88,7 @@ export const Home = () => {
       <div className="content__items">
         {isLoaded
           ? pizzas.map((el) => {
-              return <PizzaBlock key={el.id} {...el} />;
+              return <PizzaBlock key={el.id} {...el} onAddPizza={onAddPizzaToCard} />;
               // создаем массив из 10 элементов, и заполняем его компонентами предзагрузки пицц
             })
           : Array(10).fill(<PizzaLoaded />)}

@@ -1,15 +1,30 @@
 import React, { useState } from 'react'
-import { pizzasType } from '../../pages/Home';
+import {onAddPizzaHandlerType, pizzasType} from '../../pages/Home';
 import classNames from 'classnames';
+import {Button} from "../Button/Button";
+import {Dispatch} from "redux";
 type PizzaBlockPropsType = {
-
+    onAddPizza: (obj: onAddPizzaHandlerType) => void
 }
 
-export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, price, imageUrl, types, sizes }) => {
+
+export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({id, name, price, imageUrl, types, sizes, onAddPizza }) => {
     const [activeItemType, setActiveItemType] = useState(types[0]);
     const [pizzaSizes, setPizzaSizes] = useState(sizes[0])
     const availablePizzaTypes = ['тонкое', 'традиционное'];
     const availablePizzaSizes = [26, 30, 40];
+
+    const onAddPizzaHandler = () => {
+        const pizza: onAddPizzaHandlerType = {
+            id,
+            name,
+            price,
+            type: availablePizzaTypes[activeItemType],
+            size: pizzaSizes,
+        }
+        onAddPizza(pizza)
+    }
+
 
     return (
 
@@ -57,7 +72,7 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, p
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <div className="button button--outline button--add">
+                <Button onClick={onAddPizzaHandler} className={'button--outline button--add'}>
                     <svg
                         width="12"
                         height="12"
@@ -72,7 +87,7 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({ name, p
                     </svg>
                     <span>Добавить</span>
                     <i>2</i>
-                </div>
+                </Button>
             </div>
         </div>   
     );
