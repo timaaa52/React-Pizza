@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const pizzasApi = {
     getPizzas(category: number | null, sortBy: sortByType) {
-            return instance.get(`http://localhost:3001/pizzas?${ category !== null ? `category=$${category}`: ''}&_sort=${sortBy}&_order=${sortBy === 'name' ? 'asc' : 'desc'}`)
+            return instance.get(`http://localhost:3001/pizzas?${ category !== null ? `category=${category}`: ''}&_sort=${sortBy}&_order=${sortBy === 'name' ? 'asc' : 'desc'}`)
     },
 }
 

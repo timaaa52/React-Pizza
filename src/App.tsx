@@ -1,10 +1,7 @@
-import React, {useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from "./Components";
 import { Cart } from './pages/Cart';
 import { Home } from './pages/Home';
-import {useDispatch} from "react-redux";
-import { fetchPizzasTC } from './redux/reducers/pizzasReducer';
 
 function App() {
 

@@ -31,7 +31,7 @@ export const pizzasReducer = (state: stateType = initialState, action: generalTy
 
 
 export const fetchPizzasTC = (category: number | null, sortBy: sortByType) => (dispatch: Dispatch) => {
-    pizzasApi.getPizzas(category, sortBy)!.then(res => dispatch(setPizzasAC(res.data)))
+    pizzasApi.getPizzas(category, sortBy).then(res => dispatch(setPizzasAC(res.data)))
 }
 
 
