@@ -9,6 +9,7 @@ import { sortByType } from "../redux/reducers/filterReducer";
 import { fetchPizzasTC } from "../redux/reducers/pizzasReducer";
 import { useEffect } from "react";
 import {addPizzaToCartAC} from "../redux/actions/cartActions";
+import {itemPizzaType} from "../redux/reducers/cartReducer";
 
 export type pizzasType = {
   id: number;
@@ -21,19 +22,14 @@ export type pizzasType = {
   rating: number;
 };
 
-export type onAddPizzaHandlerType = {
-  id: number
-  name: string
-  price: number
-  type: string
-  size: number
-}
-
 type ss = {
   pizzas: Array<pizzasType>;
   category: null | number;
   isLoaded: boolean;
   sortBy: sortByType
+  cartItems: {
+    [key: string]: Array<itemPizzaType>
+  }
 };
 
 const items = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
@@ -48,13 +44,14 @@ export const Home = () => {
 
   // const category = useSelector<rootReducerType, number | null>(state => state.filters.category);
   // const pizzas = useSelector<rootReducerType, Array<pizzasType>>(state => state.pizzas.items);
-  const { pizzas, category, isLoaded, sortBy } = useSelector<rootReducerType, ss>(
-    ({ pizzas, filters }) => {
+  const { pizzas, category, isLoaded, sortBy, cartItems } = useSelector<rootReducerType, ss>(
+    ({ pizzas, filters, cart }) => {
       return {
         pizzas: pizzas.items,
         isLoaded: pizzas.isLoading,
         category: filters.category,
-        sortBy: filters.sortBy
+        sortBy: filters.sortBy,
+        cartItems: cart.items
       };
     }
   );
@@ -70,7 +67,9 @@ export const Home = () => {
     [dispatch]
   );
 
-  const onAddPizzaToCard = (item: onAddPizzaHandlerType) => {
+
+  // func для добавление пиццы в редьюсер корзины
+  const onAddPizzaToCard = (item: itemPizzaType) => {
     dispatch(addPizzaToCartAC(item))
   }
 
@@ -88,7 +87,7 @@ export const Home = () => {
       <div className="content__items">
         {isLoaded
           ? pizzas.map((el) => {
-              return <PizzaBlock key={el.id} {...el} onAddPizza={onAddPizzaToCard} />;
+              return <PizzaBlock key={el.id} onAddPizza={onAddPizzaToCard} addedPizzaCount={cartItems[el.id]} {...el}  />;
               // создаем массив из 10 элементов, и заполняем его компонентами предзагрузки пицц
             })
           : Array(10).fill(<PizzaLoaded />)}
