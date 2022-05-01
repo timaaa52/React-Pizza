@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
-import {onAddPizzaHandlerType, pizzasType} from '../../pages/Home';
+import { pizzasType } from '../../pages/Home';
 import classNames from 'classnames';
 import {Button} from "../Button/Button";
-import {Dispatch} from "redux";
+import {itemPizzaType} from "../../redux/reducers/cartReducer";
+
+
 type PizzaBlockPropsType = {
-    onAddPizza: (obj: onAddPizzaHandlerType) => void
+    onAddPizza: (obj: itemPizzaType) => void
+    addedPizzaCount: Array<itemPizzaType>
 }
 
 
-export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({id, name, price, imageUrl, types, sizes, onAddPizza }) => {
+export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({id, name, price, imageUrl, types, sizes, onAddPizza, addedPizzaCount }) => {
     const [activeItemType, setActiveItemType] = useState(types[0]);
     const [pizzaSizes, setPizzaSizes] = useState(sizes[0])
     const availablePizzaTypes = ['тонкое', 'традиционное'];
     const availablePizzaSizes = [26, 30, 40];
 
     const onAddPizzaHandler = () => {
-        const pizza: onAddPizzaHandlerType = {
+        const pizza: itemPizzaType = {
             id,
             name,
             price,
@@ -86,7 +89,10 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({id, name
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
+                    {
+                        addedPizzaCount && <i>{addedPizzaCount.length}</i>
+                    }
+
                 </Button>
             </div>
         </div>   
