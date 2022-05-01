@@ -14,7 +14,7 @@ type a = {
     totalCount: number
 }
 
-export const Header: React.FC<HeaderPropsType> = ({}) => {
+export const Header: React.FC<HeaderPropsType> = (props) => {
 
     const { totalPrice, totalCount } = useSelector<rootReducerType, a>(({cart}) => ({
         totalCount: cart.totalCount,
