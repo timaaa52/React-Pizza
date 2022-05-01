@@ -1,7 +1,4 @@
-import { Dispatch } from "redux";
-import { setCategoryType, setSortByType } from "../actions/fiterActions"
-import {pizzasApi} from "../../api/api"
-import { setPizzasAC, setPizzasLoadingAC } from "../actions/pizzasActions";
+import {setCategoryType, setSortByType} from "../actions/fiterActions"
 
 export type sortByType = 'rating' | 'price' | 'name';
 
