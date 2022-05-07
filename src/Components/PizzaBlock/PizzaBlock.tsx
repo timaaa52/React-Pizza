@@ -7,7 +7,7 @@ import {itemPizzaType} from "../../redux/reducers/cartReducer";
 
 type PizzaBlockPropsType = {
     onAddPizza: (obj: itemPizzaType) => void
-    addedPizzaCount: Array<itemPizzaType>
+    addedPizzaCount: { items: Array<itemPizzaType> }
 }
 
 
@@ -90,7 +90,7 @@ export const PizzaBlock: React.FC<PizzaBlockPropsType & pizzasType> = ({id, name
                     </svg>
                     <span>Добавить</span>
                     {
-                        addedPizzaCount && <i>{addedPizzaCount.length}</i>
+                        addedPizzaCount && <i>{addedPizzaCount.items.length}</i>
                     }
 
                 </Button>
