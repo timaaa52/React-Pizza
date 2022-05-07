@@ -28,7 +28,9 @@ type ss = {
   isLoaded: boolean;
   sortBy: sortByType
   cartItems: {
-    [key: string]: Array<itemPizzaType>
+    [key: string]: {
+      items: Array<itemPizzaType>
+    }
   }
 };
 
