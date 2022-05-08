@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {rootReducerType} from "../redux/store";
 import {CartStateType} from "../redux/reducers/cartReducer";
 import emptyCart from "../assets/img/empty-cart.png"
-import {clearCartAC} from "../redux/actions/cartActions";
+import {clearCartAC, removeCartItemAC} from "../redux/actions/cartActions";
 
 
 export function Cart() {
@@ -26,6 +26,9 @@ export function Cart() {
         if (window.confirm('Вы действительно хотите очистить корзину?')) {
             dispatch(clearCartAC())
         }
+    }
+    const removeCartItem = (idItem: number) => {
+        dispatch(removeCartItemAC(idItem))
     }
 
     return (
@@ -81,6 +84,9 @@ export function Cart() {
                                                                           size={el.size}
                                                                           totalPrice={items[el.id].totalPrice}
                                                                           totalCount={items[el.id].items.length}
+                                                                          id={el.id}
+                                                                          removeItem={removeCartItem}
+
                                         />)
                                         : <img src={'/static/media/empty-cart.db905d1f4b063162f25b.png'}/>
                                 }
