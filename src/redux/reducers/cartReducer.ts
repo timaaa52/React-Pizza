@@ -63,7 +63,9 @@ export const cartReducer = (state = initialState, action: GeneralType) => {
                 items: newItems,
                 // заимствуем метод concat и через apply всовываем все свойства обьекта newItem и получаем длину, для корректного отображения на странице
                 totalCount: [].concat.apply([], totalCount).length,
-                // все тоже как и више, только с помощью редьюса пробегаемся по массиву и свойтве price берем цену, и сумму цен всех пицц выводим на страницу
+                // totalCount: totalCount.length,
+                // все тоже как и више, только с помощью редьюса пробегаемся
+                // по массиву и свойтве price берем цену, и сумму цен всех пицц выводим на страницу
                 totalPrice: getTotalPrice([].concat.apply([], totalCount)),
             }
         }
@@ -76,13 +78,15 @@ export const cartReducer = (state = initialState, action: GeneralType) => {
             }
         }
         case actionsType.REMOVE_CART_ITEM: {
+            let removedItems = state.items
+            const currentTotalPrice = removedItems[action.payload.itemId].totalPrice
+            const currentTotalCount = removedItems[action.payload.itemId].items.length
+            delete removedItems[action.payload.itemId]
             return {
                 ...state,
-                items: {
-
-                }
-
-
+                removedItems,
+                totalCount: state.totalCount - currentTotalCount,
+                totalPrice: state.totalPrice - currentTotalPrice,
             }
         }
         default: return state;
